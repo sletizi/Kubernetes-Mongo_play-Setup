@@ -1,0 +1,35 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: count-api
+spec:
+  selector:
+    matchLabels:
+      app: count-api
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: count-api
+    spec:
+      containers:
+      - name: countapi
+        image: moneletizi94/countapi
+        ports:
+        - containerPort: 9000
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: countservice
+spec:
+  selector:
+    app: count-api
+  type: ClusterIP  
+  ports:
+    - protocol: TCP
+      port: 9000
+      targetPort: 9000
+
+
+
